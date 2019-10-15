@@ -1,0 +1,43 @@
+{
+  "name": "my-app",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "moment": "^2.24.0",
+    "react": "^16.10.2",
+    "react-calendar-heatmap": "^1.8.1",
+    "react-dom": "^16.10.2",
+    "react-redux": "^5.0.5",
+    "react-scripts": "3.2.0",
+    "redux": "^3.7.2",
+    "redux-logger": "^3.0.6",
+    "redux-thunk": "^2.2.0"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "jest-puppeteer": "^4.3.0",
+    "puppeteer": "^1.18.1",
+    "reactotron-react-js": "^3.3.4",
+    "reactotron-redux": "^3.1.2"
+  }
+}
