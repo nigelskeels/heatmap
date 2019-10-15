@@ -13,22 +13,30 @@ function App(props) {
     props.initHeatmap();
   })
 
-
+  // values={[
+  //   { date: '2018-01-01' },
+  //   { date: '2018-01-22' },
+  //   { date: '2018-01-30' },
+  //   // ...and so on
+  // ]}
 
   return (
     <div className="App">
       
-       This is a test yes {props.testmessage}
+      
        <div className="heatmap">
         <CalendarHeatmap
-            startDate={new Date('2016-01-01')}
-            endDate={new Date('2016-04-01')}
-            values={[
-              { date: '2016-01-01' },
-              { date: '2016-01-22' },
-              { date: '2016-01-30' },
-              // ...and so on
-            ]}
+            startDate={new Date('2019-01-01')}
+            endDate={new Date('2020-01-01')}
+            values={props.evezyData}
+            showWeekdayLabels={true}
+            showOutOfRangeDays={true}
+            classForValue={(value) => {
+              if (!value) {
+                return 'color-empty';
+              }
+              return `color-scale-${value.amount}`;
+            }}
           />
         </div>
     </div>
@@ -40,9 +48,9 @@ function mapState(state) {
 
   console.log(state)
  
-  const { testmessage } = state.heatmap;
+  const { testmessage, evezyData } = state.heatmap;
  
-  return { testmessage };
+  return { testmessage, evezyData };
 }
 
 const actionCreators = {
