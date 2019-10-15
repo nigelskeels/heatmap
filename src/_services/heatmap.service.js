@@ -1,42 +1,13 @@
-import {firstSourceUrl} from '../Connectionsettings';
-// import config from 'config';
-// import { authHeader } from '../_helpers';
-
 import moment from 'moment'
 moment.locale('en'); // set to english
 
-
 export const heatmapService = {
-    bldgGetOrdSummaryList
+    readfile
 };
 
-
-
-
-
-
-function bldgGetOrdSummaryList(){
-    var dateTime = moment.utc().format('YYYY-MM-DD HH:mm:ss');
-
-    var dat = {
-        "msgType": "BldgGetOrdSummaryListReq",
-        "msgFmtVer": 1,
-        "reqdEmailAddr":"picker@efp-me.com",
-        "reqdOrdState":"PICKLIST",
-      }
-
-    const requestOptions = {
-        method: 'POST',
-        mode: 'cors',
-        body: JSON.stringify(dat),
-        headers: { 'Authorization':"test" , 'Accept': 'application/json','Content-Type': 'application/json'}
-    };
-
-    return fetch(`${firstSourceUrl}Ordering/BldgGetOrdSummaryList`, requestOptions).then(handleResponse); 
+function readfile(){
+    return fetch('./evezy-transactions.json').then(handleResponse); 
 }
-
-
-
 
 
 //--------------------------------------------------

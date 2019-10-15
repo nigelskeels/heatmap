@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useEffect} from 'react';
 import { connect } from 'react-redux';
 import { heatmapActions } from './_actions';
 import CalendarHeatmap from 'react-calendar-heatmap';
@@ -8,6 +8,13 @@ import './App.css';
 import './react-calendar-heatmap.css';
 
 function App(props) {
+
+  useEffect(()=>{
+    props.initHeatmap();
+  })
+
+
+
   return (
     <div className="App">
       
@@ -39,7 +46,7 @@ function mapState(state) {
 }
 
 const actionCreators = {
-  initHeatmap: heatmapActions.initHeatmap_action
+    initHeatmap: heatmapActions.getHeatmapData_action
 };
 
 export default connect(mapState, actionCreators)(App)

@@ -14,7 +14,7 @@ function getHeatmapData_action(){
     return dispatch => {
         dispatch(request());
 
-        heatmapService.getNextTransactionID()
+        heatmapService.readfile()
             .then(
                 data => dispatch(success(data)),
                 error => dispatch(failure(error.toString()))
@@ -22,6 +22,6 @@ function getHeatmapData_action(){
     };
 
     function request() { return { type: heatmapConstants.GETHEATMAPDATA_REQUEST } }
-    function success(data) { return { type: heatmapConstants.GETHEATMAPDATA_SUCCESS, data } }
+    function success(data) {return { type: heatmapConstants.GETHEATMAPDATA_SUCCESS, data } }
     function failure(error) { return { type: heatmapConstants.GETHEATMAPDATA_FAILURE, error } }
 }

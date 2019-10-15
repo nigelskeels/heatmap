@@ -1,23 +1,25 @@
 import { heatmapConstants } from '../_constants';
 
 const initialState = { 
-  "testmessage":"bob"
+  "testmessage":"bob",
+    "evezyData":[]
 };
 
 export function heatmap(state = initialState, action) {
 
   switch (action.type) {
-    case heatmapConstants.GETPANELFILTERS_REQUEST:
+    case heatmapConstants.GETHEATMAPDATA_REQUEST:
       return {
         ...state,
         loading: true
       };
-    case heatmapConstants.GETPANELFILTERS_SUCCESS:
+    case heatmapConstants.GETHEATMAPDATA_SUCCESS:
       return {
         ...state,
         loading: false,
+        evezyData:action.data
       };
-    case heatmapConstants.GETPANELFILTERS_FAILURE:
+    case heatmapConstants.GETHEATMAPDATA_FAILURE:
       return { 
         ...state,
         loading: false,
