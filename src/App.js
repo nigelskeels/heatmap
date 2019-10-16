@@ -11,19 +11,13 @@ function App(props) {
 
   useEffect(()=>{
     props.initHeatmap();
-  })
+  },[])
 
-  // values={[
-  //   { date: '2018-01-01' },
-  //   { date: '2018-01-22' },
-  //   { date: '2018-01-30' },
-  //   // ...and so on
-  // ]}
-
+  let redvalmultiplier = 255/props.minRange
+  let greenvalmultiplier = 255/props.maxRange
+  
   return (
-    <div className="App">
-      
-      
+    <div className="App">    
        <div className="heatmap">
         <CalendarHeatmap
             startDate={new Date('2019-01-01')}
@@ -31,10 +25,22 @@ function App(props) {
             values={props.evezyData}
             showWeekdayLabels={true}
             showOutOfRangeDays={true}
+            
+            transformDayElement={ (element, value, index) =>
+              
+              //  let val = props.evezyData[index]
+              // React.cloneElement(element, { fill: 'rgb(${value.amount*greenvalmultiplier}, 0, 0)' })
+               React.cloneElement(element, { fill: 'rgb(0,255,0)' })
+            
+            
+            }
+            
             classForValue={(value) => {
+               
               if (!value) {
                 return 'color-empty';
               }
+
               return `color-scale-${value.amount}`;
             }}
           />
@@ -48,9 +54,9 @@ function mapState(state) {
 
   console.log(state)
  
-  const { testmessage, evezyData } = state.heatmap;
+  const { testmessage, evezyData, maxRange } = state.heatmap;
  
-  return { testmessage, evezyData };
+  return { testmessage, evezyData, maxRange };
 }
 
 const actionCreators = {

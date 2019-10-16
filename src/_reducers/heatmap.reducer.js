@@ -17,7 +17,8 @@ export function heatmap(state = initialState, action) {
       return {
         ...state,
         loading: false,
-        evezyData:action.data
+        evezyData:action.data,
+        maxRange:processMinMaxvals(action.data)
       };
     case heatmapConstants.GETHEATMAPDATA_FAILURE:
       return { 
@@ -34,3 +35,18 @@ export function heatmap(state = initialState, action) {
 }
 
 
+const processMinMaxvals = (data) => {
+
+  let minmax= data.map(val=>{
+    if(val.transactionType==="failed"){
+      return -val.amount
+    }
+    return val.amount
+  })
+
+  let out = {
+              "min": Math.min(...minmax),
+              "max": Math.max(...minmax)
+            }  
+  return out
+}
