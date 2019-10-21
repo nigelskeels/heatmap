@@ -12,9 +12,9 @@ function App(props) {
   useEffect(()=>{
     props.initHeatmap();
   },[])
-
-  let redvalmultiplier = 255/props.minRange
-  let greenvalmultiplier = 255/props.maxRange
+  
+  let greenvalmultiplier = 255/props.totalRange.successMax
+  let redvalmultiplier = 255/props.totalRange.failedMax
   
   return (
     <div className="App">    
@@ -23,26 +23,27 @@ function App(props) {
             startDate={new Date('2019-01-01')}
             endDate={new Date('2020-01-01')}
             values={props.evezyData}
+            dat={props.evezyData}
             showWeekdayLabels={true}
             showOutOfRangeDays={true}
-            
-            transformDayElement={ (element, value, index) =>
-              
-              //  let val = props.evezyData[index]
-              // React.cloneElement(element, { fill: 'rgb(${value.amount*greenvalmultiplier}, 0, 0)' })
-               React.cloneElement(element, { fill: 'rgb(0,255,0)' })
-            
-            
-            }
-            
-            classForValue={(value) => {
-               
-              if (!value) {
-                return 'color-empty';
-              }
-
-              return `color-scale-${value.amount}`;
+            onClick={value => alert(`${value.transactionType} Transaction of ${value.amount}`)}
+            transformDayElement={(element, value, index) =>{
+             
+             if(value!==null){
+                let amountRounded = Math.round(value.amount) 
+                
+                if(value.transactionType=="success"){
+                  let valTo255  = Math.round(amountRounded*greenvalmultiplier)
+                  return React.cloneElement(element, { fill: 'rgb(0,'+valTo255+',0)' })                  
+                }
+                else{     
+                  let valTo255  = Math.round(amountRounded*redvalmultiplier)
+                  return React.cloneElement(element, { fill: 'rgb('+valTo255+',0,0)' })
+                } 
+              } 
             }}
+            
+            
           />
         </div>
     </div>
@@ -54,9 +55,9 @@ function mapState(state) {
 
   console.log(state)
  
-  const { testmessage, evezyData, maxRange } = state.heatmap;
+  const { evezyData, totalRange } = state.heatmap;
  
-  return { testmessage, evezyData, maxRange };
+  return { evezyData, totalRange };
 }
 
 const actionCreators = {

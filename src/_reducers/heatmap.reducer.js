@@ -1,8 +1,8 @@
 import { heatmapConstants } from '../_constants';
 
 const initialState = { 
-  "testmessage":"bob",
-    "evezyData":[]
+    "evezyData":[],
+    "totalRange":{'successMax':0,'failedMax':0}
 };
 
 export function heatmap(state = initialState, action) {
@@ -18,7 +18,7 @@ export function heatmap(state = initialState, action) {
         ...state,
         loading: false,
         evezyData:action.data,
-        maxRange:processMinMaxvals(action.data)
+        totalRange:processMinMaxvals(action.data)
       };
     case heatmapConstants.GETHEATMAPDATA_FAILURE:
       return { 
@@ -37,16 +37,22 @@ export function heatmap(state = initialState, action) {
 
 const processMinMaxvals = (data) => {
 
-  let minmax= data.map(val=>{
-    if(val.transactionType==="failed"){
-      return -val.amount
-    }
-    return val.amount
-  })
 
+  let sucessArray = []
+  let failedArray = []
+
+  for (let i = 0; i < data.length; i++) {
+    if(data[i].transactionType==="success"){
+      sucessArray.push(data[i].amount)
+    }
+    if(data[i].transactionType==="failed"){
+      failedArray.push(data[i].amount)
+    }    
+  }
+ 
   let out = {
-              "min": Math.min(...minmax),
-              "max": Math.max(...minmax)
+              "successMax": Math.round(Math.max(...sucessArray)),
+               "failedMax": Math.round(Math.min(...failedArray))
             }  
   return out
 }
