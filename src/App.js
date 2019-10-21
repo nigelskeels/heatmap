@@ -26,7 +26,7 @@ function App(props) {
             dat={props.evezyData}
             showWeekdayLabels={true}
             showOutOfRangeDays={true}
-            onClick={value => alert(`${value.transactionType} Transaction of ${value.amount}`)}
+            // onClick={value => alert(`${value.transactionType} Transaction of ${value.amount}`)}
             transformDayElement={(element, value, index) =>{
              
              if(value!==null){
@@ -36,9 +36,12 @@ function App(props) {
                   let valTo255  = Math.round(amountRounded*greenvalmultiplier)
                   return React.cloneElement(element, { fill: 'rgb(0,'+valTo255+',0)' })                  
                 }
-                else{     
+                else if(value.transactionType=="failed"){    
                   let valTo255  = Math.round(amountRounded*redvalmultiplier)
                   return React.cloneElement(element, { fill: 'rgb('+valTo255+',0,0)' })
+                } 
+                else{    
+                  return React.cloneElement(element, { fill: 'rgb(192,192,192)' })
                 } 
               } 
             }}
