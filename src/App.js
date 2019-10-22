@@ -29,6 +29,7 @@ function App(props) {
   
   return (
     <div className="App">    
+       <h1>Heatmap</h1>
        <div className="heatmap">
         <CalendarHeatmap
             startDate={new Date('2019-01-01')}
