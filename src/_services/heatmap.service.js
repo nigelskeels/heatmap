@@ -6,7 +6,7 @@ export const heatmapService = {
 };
 
 function readfile(){
-    return fetch('./evezy-transactions.json').then(handleResponse); 
+    return fetch('./transactions.json').then(handleResponse); 
 }
 
 
