@@ -52,7 +52,7 @@ const processMinMaxvals = (data) => {
  
   let out = {
               "successMax": Math.round(Math.max(...sucessArray)),
-               "failedMax": Math.round(Math.min(...failedArray))
+               "failedMax": Math.round(Math.max(...failedArray))
             }  
   return out
 }

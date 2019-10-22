@@ -2,10 +2,12 @@ import React,{useEffect} from 'react';
 import { connect } from 'react-redux';
 import { heatmapActions } from './_actions';
 import CalendarHeatmap from 'react-calendar-heatmap';
-
-
 import './App.css';
 import './react-calendar-heatmap.css';
+
+import moment from 'moment'
+moment.locale('en'); // set to english
+
 
 function App(props) {
 
@@ -13,8 +15,17 @@ function App(props) {
     props.initHeatmap();
   },[])
   
-  let greenvalmultiplier = 255/props.totalRange.successMax
-  let redvalmultiplier = 255/props.totalRange.failedMax
+ 
+  let greenvalmultiplier = 255/Math.round(props.totalRange.successMax)
+  let redvalmultiplier = 255/Math.round(props.totalRange.failedMax)
+  
+  const customTooltipDataAttrs = { 'data-toggle': 'tooltip' };
+  function customTitleForValue(value) {
+    if(value!==null){
+      let datefomat = moment.utc(value.date).format('DD-MM-YYYY');
+      return value ? `${datefomat} Transaction ${value.transactionType} with value £${value.amount}` : null;
+    }
+  }
   
   return (
     <div className="App">    
@@ -25,11 +36,15 @@ function App(props) {
             values={props.evezyData}
             dat={props.evezyData}
             showWeekdayLabels={true}
+            weekdayLabels={["Sun","Mon","Tue","Wed","Thu","Fri","Sat"]}
             showOutOfRangeDays={true}
-            // onClick={value => alert(`${value.transactionType} Transaction of ${value.amount}`)}
+
+            titleForValue={customTitleForValue}
+            tooltipDataAttrs={customTooltipDataAttrs}
             transformDayElement={(element, value, index) =>{
              
              if(value!==null){
+
                 let amountRounded = Math.round(value.amount) 
                 
                 if(value.transactionType=="success"){
